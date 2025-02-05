@@ -63,6 +63,22 @@
             "status": "In Progress",
             "deadline": "2/28/25",
             "notes": "\"Reference orginal track\""
+        },
+        {
+            "title": "Damian's Battle Theme Remaster",
+            "client": "Gamewhere",
+            "genre": "Animated Soundtrack",
+            "status": "On hold",
+            "deadline": "2/28/25",
+            "notes": "\"No details :]\""
+        },
+        {
+            "title": "Anime Intro Theme",
+            "client": "Gamewhere",
+            "genre": "Animated Soundtrack",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"No details :]\""
         }
     ]
 }
