@@ -248,10 +248,10 @@
 		}
 
         function updateProjectHeader() {
-            const totalProjects = projects.length;
-            const completedProjects = projects.filter(p => p.status.toLowerCase() === "completed").length;
-            document.getElementById("project-header").innerText = `${completedProjects}/${totalProjects} projects completed`;
-        }
+			const totalProjects = projects.length;
+			const completedProjects = projects.filter(p => p.status.toLowerCase() === "completed").length;
+			document.getElementById("project-header").innerText = `${completedProjects}/${totalProjects} projects completed`;
+		}
 
         function displayProjects() {
             const container = document.getElementById("projects");
