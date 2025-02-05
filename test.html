@@ -15,8 +15,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            height: 100vh;
-            overflow: auto;
+            height: 100%;
+            overflow-y: auto;
         }
 
         h2 {
@@ -205,11 +205,14 @@
         }
 
         // Infinite scroll implementation
-        window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.innerHeight + window.scrollY;
+            const scrollHeight = document.documentElement.scrollHeight;
+            
+            if (scrollPosition >= scrollHeight - 100 && !loading) {
                 displayProjects();
             }
-        }
+        });
 
         // Initial load of projects
         fetchProjects();
