@@ -254,31 +254,32 @@
 		}
 
         function displayProjects() {
-            const container = document.getElementById("projects");
-            container.innerHTML = "";
-
-            const filteredProjects = filterProjectsData();
-
-            if (filteredProjects.length === 0) {
-                container.innerHTML = "<div class='error'>No matching projects found.</div>";
-                return;
-            }
-
-            filteredProjects.forEach(project => {
-                container.innerHTML += `
-                    <div class="project-container" onclick="toggleDetails(this)">
-                        <div class="title">🎶 ${highlightText(project.title)}</div>
-                        <div class="status">🛠 Status: ${highlightText(project.status)}</div>
-                        <div class="progress-bar"><div class="progress" style="width: ${project.progress || 0}%;"></div></div>
-                        <div class="project-details">
-                            <div>👤 Client: ${highlightText(project.client)}</div>
-                            <div>📅 Deadline: ${highlightText(project.deadline)}</div>
-                            <div>📝 Notes: ${highlightText(project.notes)}</div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+			const container = document.getElementById("projects");
+			container.innerHTML = "";
+		
+			const filteredProjects = filterProjectsData();
+		
+			if (filteredProjects.length === 0) {
+				container.innerHTML = "<div class='error'>No matching projects found.</div>";
+				return;
+			}
+		
+			filteredProjects.forEach(project => {
+				const progress = getProgressFromStatus(project.status); // Get progress based on status
+				container.innerHTML += `
+					<div class="project-container" onclick="toggleDetails(this)">
+						<div class="title">🎶 ${highlightText(project.title)}</div>
+						<div class="status">🛠 Status: ${highlightText(project.status)}</div>
+						<div class="progress-bar"><div class="progress" style="width: ${progress}%;"></div></div>
+						<div class="project-details">
+							<div>👤 Client: ${highlightText(project.client)}</div>
+							<div>📅 Deadline: ${highlightText(project.deadline)}</div>
+							<div>📝 Notes: ${highlightText(project.notes)}</div>
+						</div>
+					</div>
+				`;
+			});
+		}
 
         function toggleDetails(element) {
             const details = element.querySelector(".project-details");
