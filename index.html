@@ -178,6 +178,15 @@
     <div id="projects"></div>
     
     <script>
+		async function fetchProjects() {
+			document.getElementById("loading").style.display = "block";
+			try {
+				// Fetch and process data
+			} finally {
+				document.getElementById("loading").style.display = "none";
+			}
+		}
+		
         let projects = [];
         let darkMode = false;
 
