@@ -4,7 +4,7 @@
             "title": "test title",
             "client": "a friend",
             "genre": "electronic",
-            "status": "wi243234p",
+            "status": "wi23234p4",
             "deadline": "2/12/25",
             "notes": "\"none\""
         },
@@ -26,6 +26,14 @@
         },
         {
             "title": "test 3title312",
+            "client": "a friend",
+            "genre": "electronic",
+            "status": "In Progress",
+            "deadline": "2/12/25",
+            "notes": "\"none\""
+        },
+        {
+            "title": "test 3ti5tle3132",
             "client": "a friend",
             "genre": "electronic",
             "status": "In Progress",
