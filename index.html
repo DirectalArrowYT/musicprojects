@@ -281,7 +281,7 @@
 				container.innerHTML += `
 					<div class="project-container" onclick="toggleDetails(this)">
 						<div class="title">🎶 ${highlightText(project.title)}</div>
-						<div class="status">🛠 Status: ${highlightText(project.status)}</div>
+						<div class="status ${project.status.toLowerCase().replace(" ", "-")}">🛠 Status: ${highlightText(project.status)}</div>
 						<div class="progress-bar"><div class="progress" style="width: ${progress}%;"></div></div>
 						<div class="project-details">
 							<div>👤 Client: ${highlightText(project.client)}</div>
