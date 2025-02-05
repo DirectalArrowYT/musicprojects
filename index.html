@@ -163,6 +163,27 @@
                 width: 100%;
             }
         }
+		
+		/* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+		#projects::-webkit-scrollbar {
+			width: 10px;
+		}
+		
+		#projects::-webkit-scrollbar-thumb {
+			background-color: var(--secondary-color);
+			border-radius: 5px;
+		}
+		
+		#projects::-webkit-scrollbar-track {
+			background-color: var(--border-color);
+			border-radius: 5px;
+		}
+		
+		/* Custom scrollbar for Firefox */
+		#projects {
+			scrollbar-width: thin;
+			scrollbar-color: var(--secondary-color) var(--border-color);
+		}
     </style>
 </head>
 <body>
