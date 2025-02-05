@@ -47,6 +47,14 @@
             "status": "In Progress",
             "deadline": "2/12/25",
             "notes": "\"none\""
+        },
+        {
+            "title": "lets battle",
+            "client": "a friend",
+            "genre": "electronic",
+            "status": "In Progress",
+            "deadline": "2/12/25",
+            "notes": "\"none\""
         }
     ]
 }
