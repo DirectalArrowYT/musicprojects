@@ -21,7 +21,13 @@
 
         h2 {
             font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        #project-header {
+            font-size: 1.2rem;
             margin-bottom: 20px;
+            color: #ffcc00;
         }
 
         #projects {
@@ -31,7 +37,6 @@
             background-color: #2c2c2c;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
         }
 
         .project-container {
@@ -66,14 +71,10 @@
             margin-bottom: 8px;
         }
 
-        .loading,
         .error {
             text-align: center;
             padding: 20px;
             font-size: 1.2rem;
-        }
-
-        .error {
             color: #ff0000;
         }
 
@@ -110,8 +111,9 @@
 </head>
 <body>
     <h2>🎵 Current WIP Music Projects</h2>
+    <div id="project-header">Loading projects...</div>
     <input type="text" id="search" placeholder="Search projects..." onkeyup="filterProjects()">
-    <div id="projects" class="loading">Loading projects...</div>
+    <div id="projects"></div>
 
     <script>
         let projects = [];
@@ -126,11 +128,19 @@
                 // Automatically order by client name
                 projects = data.projects.sort((a, b) => a.client.localeCompare(b.client));
 
+                updateProjectHeader();
                 displayProjects();
             } catch (error) {
                 console.error("Error loading projects:", error);
                 container.innerHTML = `<div class="error">Failed to load projects. Please try again later.</div>`;
             }
+        }
+
+        function updateProjectHeader() {
+            const totalProjects = projects.length;
+            const completedProjects = projects.filter(p => p.status.toLowerCase() === "completed").length;
+
+            document.getElementById("project-header").innerText = `${completedProjects}/${totalProjects} projects completed`;
         }
 
         function displayProjects() {
@@ -140,45 +150,38 @@
             const filteredProjects = filterProjectsData();
 
             if (filteredProjects.length === 0) {
-                container.innerHTML = "No projects found.";
+                container.innerHTML = "<div class='error'>No matching projects found.</div>";
                 return;
             }
 
             filteredProjects.forEach(project => {
-                let projectHTML = `
+                container.innerHTML += `
                     <div class="project-container">
                         <div class="title">🎶 ${project.title} (${project.genre})</div>
-                        <div class="client">👤 Client: ${project.client}</div>
+                        <div>👤 Client: ${project.client}</div>
                         <div class="status">🛠 Status: ${project.status}</div>
-                        <div class="deadline">📅 Deadline: ${project.deadline}</div>
-                        <div class="notes">📝 Notes: ${project.notes}</div>
-                        <hr>
+                        <div>📅 Deadline: ${project.deadline}</div>
+                        <div>📝 Notes: ${project.notes}</div>
                     </div>
                 `;
-                container.innerHTML += projectHTML;
-            });
-        }
-
-        function filterProjectsData() {
-            const searchQuery = document.getElementById("search").value.toLowerCase();
-            return projects.filter(project => {
-                return (
-                    project.title.toLowerCase().includes(searchQuery) ||
-                    project.client.toLowerCase().includes(searchQuery) ||
-                    project.genre.toLowerCase().includes(searchQuery)
-                );
             });
         }
 
         function filterProjects() {
-            displayProjects(); // Re-filter and display the projects on search
+            displayProjects();
         }
 
-        // Initial load of all projects
-        fetchProjects();
+        function filterProjectsData() {
+            const searchQuery = document.getElementById("search").value.toLowerCase();
+            return projects.filter(p =>
+                p.title.toLowerCase().includes(searchQuery) ||
+                p.client.toLowerCase().includes(searchQuery) ||
+                p.status.toLowerCase().includes(searchQuery) ||
+                p.genre.toLowerCase().includes(searchQuery)
+            );
+        }
 
-        // Auto-refresh every 60 seconds
-        setInterval(fetchProjects, 60000);
+        fetchProjects();
     </script>
 </body>
 </html>
