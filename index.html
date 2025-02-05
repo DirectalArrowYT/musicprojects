@@ -104,7 +104,19 @@
             background: #ffcc00;
             transition: width 1s ease-in-out;
         }
-
+		
+		.status.not-started {
+			color: var(--error-color);
+		}
+		.status.on-hold {
+			color: var(--secondary-color);
+		}
+		.status.in-progress {
+			color: var(--highlight-color);
+		}
+		.status.completed {
+			color: var(--success-color);
+		}
 		.error {
             text-align: center;
             padding: 20px;
