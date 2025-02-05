@@ -14,8 +14,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100vh;
+            overflow: auto;
         }
 
         h2 {
@@ -91,27 +92,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        #pagination {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        #pagination button {
-            background-color: #4f4f4f;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 5px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        #pagination button:hover {
-            background-color: #ffcc00;
-        }
-
         #search {
             margin-bottom: 20px;
             padding: 10px;
@@ -147,12 +127,11 @@
     <h2>🎵 Current WIP Music Projects</h2>
     <input type="text" id="search" placeholder="Search projects..." onkeyup="filterProjects()">
     <div id="projects" class="loading">Loading projects...</div>
-    <div id="pagination"></div>
 
     <script>
         let projects = [];
-        let currentPage = 1;
-        const projectsPerPage = 5;
+        let currentIndex = 0;
+        const projectsPerLoad = 5;
 
         async function fetchProjects() {
             const container = document.getElementById("projects");
@@ -168,7 +147,6 @@
                 projects = data.projects.sort((a, b) => a.client.localeCompare(b.client));
 
                 displayProjects();
-                setupPagination();
             } catch (error) {
                 console.error("Error loading projects:", error);
                 container.innerHTML = `<div class="error">Failed to load projects. Please try again later.</div>`;
@@ -180,10 +158,7 @@
             container.innerHTML = "";
 
             const filteredProjects = filterProjectsData();
-
-            // Show projects for the current page
-            const startIndex = (currentPage - 1) * projectsPerPage;
-            const selectedProjects = filteredProjects.slice(startIndex, startIndex + projectsPerPage);
+            const selectedProjects = filteredProjects.slice(currentIndex, currentIndex + projectsPerLoad);
 
             if (selectedProjects.length === 0) {
                 container.innerHTML = "No projects found.";
@@ -203,22 +178,8 @@
                 `;
                 container.innerHTML += projectHTML;
             });
-        }
 
-        function setupPagination() {
-            const totalPages = Math.ceil(projects.length / projectsPerPage);
-            const paginationContainer = document.getElementById("pagination");
-            paginationContainer.innerHTML = '';
-
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement("button");
-                button.textContent = i;
-                button.onclick = () => {
-                    currentPage = i;
-                    displayProjects();
-                };
-                paginationContainer.appendChild(button);
-            }
+            currentIndex += projectsPerLoad;
         }
 
         function filterProjectsData() {
@@ -233,8 +194,15 @@
         }
 
         function filterProjects() {
-            currentPage = 1; // Reset to first page on search
+            currentIndex = 0; // Reset to first batch on search
             displayProjects();
+        }
+
+        // Infinite scroll implementation
+        window.onscroll = function() {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                displayProjects();
+            }
         }
 
         // Initial load of projects
