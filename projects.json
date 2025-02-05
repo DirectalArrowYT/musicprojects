@@ -47,6 +47,22 @@
             "status": "In Progress",
             "deadline": "2/28/25",
             "notes": "\"no details to prevent spoilers... atmospheric.\""
+        },
+        {
+            "title": "Trailer Theme",
+            "client": "Dawn Beneath Us",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"include gameover motif\""
+        },
+        {
+            "title": "Game Over Theme",
+            "client": "Dawn Beneath Us",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"Reference orginal track\""
         }
     ]
 }
