@@ -227,10 +227,9 @@
         let projects = [];
         let darkMode = false;
 
-        async function fetchProjects() {
+		async function fetchProjects() {
 			try {
 				const response = await fetch('https://raw.githubusercontent.com/DirectalArrowYT/musicprojects/refs/heads/main/projects.json');
-				if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 				const data = await response.json();
 				projects = data.projects.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
 				updateProjectHeader();
