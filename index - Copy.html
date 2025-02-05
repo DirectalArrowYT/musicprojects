@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directal's Website</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<!-- Navigation Bar -->
+    <nav>
+		<div class="logo">
+			<img src="assets/icon.png" alt="Directal's Icon" class="logo-icon">
+			<span><div class="customheader">Directal's Website</div></span>
+		</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+			<a href="about.html">About</a>
+            <a href="musicreleases.html">Music Releases</a>
+			<a href="musicprojects.html">Music Projects</a>
+        </div>
+    </nav>
+    <h2>🎵 Current WIP Music Projects</h2>
+    <button onclick="toggleDarkMode()">🌗 Toggle Dark/Light Mode</button>
+    <div id="project-header">Loading projects...</div>
+	<div id="loading">Loading...</div>
+    <input type="text" id="search" placeholder="Search projects..." onkeyup="filterProjects()">
+    
+    <select id="filters" onchange="filterProjects()">
+        <option value="all">All Projects</option>
+        <option value="completed">Completed</option>
+        <option value="in progress">In Progress</option>
+        <option value="on hold">On Hold</option>
+    </select>
+    
+    <!-- Google Translate -->
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {pageLanguage: 'en', includedLanguages: 'en,es,ru,ja', layout: google.translate.TranslateElement.InlineLayout.SIMPLE},
+                'google_translate_element'
+            );
+        }
+		const currentPage = window.location.pathname.split("/").pop();
+		document.querySelectorAll('.nav-links a').forEach(link => {
+			if (link.getAttribute('href') === currentPage) {
+				link.classList.add('active');
+			}
+		});
+		function toggleMenu() {
+			const navLinks = document.querySelector('.nav-links');
+			navLinks.classList.toggle('active');
+		}
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
+    <div id="projects"></div>
+    
+    <script>
+        let projects = [];
+        let darkMode = false;
+		
+		// Map statuses to progress values
+		function getProgressFromStatus(status) {
+			switch (status.toLowerCase()) {
+				case "not started":
+					return 0;
+				case "on hold":
+					return 25;
+				case "in progress":
+					return 50;
+				case "completed":
+					return 100;
+				default:
+					return 0; // Default for unknown statuses
+			}
+		}
+		
+		async function fetchProjects() {
+			try {
+				const response = await fetch('https://raw.githubusercontent.com/DirectalArrowYT/musicprojects/refs/heads/main/projects.json');
+				const data = await response.json();
+				projects = data.projects.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+				updateProjectHeader();
+				displayProjects();
+			} catch (error) {
+				console.error("Error loading projects:", error);
+				document.getElementById("projects").innerHTML = `<div class="error">Failed to load projects. Please try again later.</div>`;
+			}
+		}
+
+        function updateProjectHeader() {
+			const totalProjects = projects.length;
+			const completedProjects = projects.filter(p => p.status.toLowerCase() === "completed").length;
+			document.getElementById("project-header").innerText = `${completedProjects}/${totalProjects} projects completed`;
+		}
+
+        function displayProjects() {
+			const container = document.getElementById("projects");
+			container.innerHTML = "";
+		
+			const filteredProjects = filterProjectsData();
+		
+			if (filteredProjects.length === 0) {
+				container.innerHTML = "<div class='error'>No matching projects found.</div>";
+				return;
+			}
+		
+			filteredProjects.forEach(project => {
+				const progress = getProgressFromStatus(project.status); // Get progress based on status
+				container.innerHTML += `
+					<div class="project-container" onclick="toggleDetails(this)">
+						<div class="title">🎶 ${highlightText(project.title)}</div>
+						<div class="status ${project.status.toLowerCase().replace(" ", "-")}">🛠 Status: ${highlightText(project.status)}</div>
+						<div class="progress-bar"><div class="progress" style="width: ${progress}%;"></div></div>
+						<div class="project-details">
+							<div>👤 Client: ${highlightText(project.client)}</div>
+							<div>📅 Deadline: ${highlightText(project.deadline)}</div>
+							<div>📝 Notes: ${highlightText(project.notes)}</div>
+						</div>
+					</div>
+				`;
+			});
+		}
+
+        function toggleDetails(element) {
+            const details = element.querySelector(".project-details");
+            details.style.display = details.style.display === "block" ? "none" : "block";
+        }
+
+        function filterProjectsData() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filter = document.getElementById("filters").value.toLowerCase();
+
+            return projects.filter(project => {
+                const matchesSearch = Object.values(project).some(value => value.toString().toLowerCase().includes(query));
+                const matchesFilter = filter === "all" || project.status.toLowerCase() === filter;
+                return matchesSearch && matchesFilter;
+            });
+        }
+
+        function filterProjects() {
+            displayProjects();
+        }
+
+        function highlightText(text) {
+            const query = document.getElementById("search").value.toLowerCase();
+            if (!query) return text;
+
+            const regex = new RegExp(`(${query})`, "gi");
+            return text.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        function toggleDarkMode() {
+            darkMode = !darkMode;
+            document.body.classList.toggle("light-mode", darkMode);
+        }
+
+        fetchProjects();
+    </script>
+</body>
+</html>
