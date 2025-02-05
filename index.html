@@ -226,7 +226,23 @@
 		
         let projects = [];
         let darkMode = false;
-
+		
+		// Map statuses to progress values
+		function getProgressFromStatus(status) {
+			switch (status.toLowerCase()) {
+				case "not started":
+					return 0;
+				case "on hold":
+					return 25;
+				case "in progress":
+					return 50;
+				case "completed":
+					return 100;
+				default:
+					return 0; // Default for unknown statuses
+			}
+		}
+		
 		async function fetchProjects() {
 			try {
 				const response = await fetch('https://raw.githubusercontent.com/DirectalArrowYT/musicprojects/refs/heads/main/projects.json');
