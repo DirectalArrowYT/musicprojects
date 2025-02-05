@@ -48,13 +48,16 @@
         }
 
         #projects {
-            width: 100%;
-            max-width: 800px;
-            padding: 20px;
-            background-color: var(--border-color);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
+			width: 100%;
+			max-width: 800px;
+			height: 400px; /* Set a fixed height */
+			padding: 20px;
+			background-color: var(--border-color);
+			border-radius: 8px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+			overflow-y: auto; /* Enable vertical scrolling */
+			margin-bottom: 20px; /* Add some spacing at the bottom */
+		}
 
         .project-container {
             padding: 15px;
