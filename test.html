@@ -132,12 +132,16 @@
         let projects = [];
         let currentIndex = 0;
         const projectsPerLoad = 5;
+        let loading = false; // Flag to prevent duplicate loading
 
         async function fetchProjects() {
             const container = document.getElementById("projects");
 
-            // Show loading spinner
-            container.innerHTML = '<div class="spinner"></div>';
+            // Avoid loading if already in progress
+            if (loading) return;
+
+            loading = true;
+            container.innerHTML = '<div class="spinner"></div>'; // Show loading spinner
 
             try {
                 const response = await fetch('https://raw.githubusercontent.com/DirectalArrowYT/musicprojects/refs/heads/main/projects.json');
@@ -151,6 +155,8 @@
                 console.error("Error loading projects:", error);
                 container.innerHTML = `<div class="error">Failed to load projects. Please try again later.</div>`;
             }
+
+            loading = false;
         }
 
         function displayProjects() {
@@ -200,7 +206,7 @@
 
         // Infinite scroll implementation
         window.onscroll = function() {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
                 displayProjects();
             }
         }
