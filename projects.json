@@ -7,6 +7,38 @@
             "status": "Completed",
             "deadline": "2/4/25",
             "notes": "\"none\""
+        },
+        {
+            "title": "Legend Says",
+            "client": "Red Velvet",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"Basically Ouat but its the legend from deltarune\""
+        },
+        {
+            "title": "Menu Start!",
+            "client": "Red Velvet",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"Something like undertales menu theme but its Faint Glow from deltarune!\n\""
+        },
+        {
+            "title": "Lost Girl",
+            "client": "Red Velvet",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"Something like deltarunes, the theme should sound mysterious!\""
+        },
+        {
+            "title": "Tumbled down",
+            "client": "Red Velvet",
+            "genre": "Video Game OST",
+            "status": "In Progress",
+            "deadline": "2/28/25",
+            "notes": "\"A papyrus fallen down, make it sound like a country farmy type theme with some papyrus motifs. Its also basically the ( sans. Replacement )\""
         }
     ]
 }
