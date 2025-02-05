@@ -114,6 +114,15 @@
     <div id="project-header">Loading projects...</div>
     <input type="text" id="search" placeholder="Search projects..." onkeyup="filterProjects()">
     <div id="projects"></div>
+	<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {pageLanguage: 'en', includedLanguages: 'en,es,ru,ja', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 
+            'google_translate_element'
+        );
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         let projects = [];
