@@ -298,6 +298,12 @@
                 'google_translate_element'
             );
         }
+		const currentPage = window.location.pathname.split("/").pop();
+		document.querySelectorAll('.nav-links a').forEach(link => {
+			if (link.getAttribute('href') === currentPage) {
+				link.classList.add('active');
+			}
+		});
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     
