@@ -119,6 +119,14 @@
             "status": "Not Started",
             "deadline": "6/31/25",
             "notes": "\u201cno details sorry :]\u201d"
+        },
+        {
+            "title": "Song track title",
+            "client": "author",
+            "genre": "song genre",
+            "status": "Not Started",
+            "deadline": "due date",
+            "notes": "\u201cany details\u201d"
         }
     ]
 }
